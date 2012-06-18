@@ -8,7 +8,7 @@
     <ProjectGuid>{780D8DF0-0B4F-41A4-B9EC-C58AC041F6DF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DemonBuddyPlugins_HomeMedia</RootNamespace>
+    <RootNamespace>MBot</RootNamespace>
     <AssemblyName>DemonBuddyPlugins-HomeMedia</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -44,17 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Y:\D3\DemonBuddyPlugins\QuitOnIdle\GameTimeLimit.cs" />
+    <Compile Include="Y:\D3\DemonBuddyPlugins\SellRepair\SellRepair.cs">
+      <Link>SellRepair\SellRepair.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Y:\D3\Demonbuddy.125\Plugins\SarkothManualMove\Stats.cs">
-      <Link>Stats.cs</Link>
+    <Compile Include="Y:\D3\DemonBuddyPlugins\SarkothManualMove\Stats.cs">
+      <Link>SarkothManual\Stats.cs</Link>
     </Compile>
-    <Compile Include="Y:\D3\Demonbuddy.125\Plugins\SarkothManualMove\QuitOnIdle.cs" />
-    <Compile Include="Y:\D3\Demonbuddy.125\Plugins\SarkothManualMove\SarkothManualPathing.cs">
-      <Link>SarkothManualPathing.cs</Link>
+    <Compile Include="Y:\D3\DemonBuddyPlugins\SarkothManualMove\SarkothManualPathing.cs">
+      <Link>SarkothManual\SarkothManualPathing.cs</Link>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="SarkothManualPathing.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
