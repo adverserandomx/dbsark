@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NotificationClicker.cs" />
     <Compile Include="Plugins\GameTimeLimit\GameTimeLimit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Plugins\SarkothManualPathing\SarkothManualPathing.cs" />
