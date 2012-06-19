@@ -41,7 +41,7 @@ namespace MBot
             Log("Enabled", Name);
             Zeta.CommonBot.GameEvents.OnGameJoined += new EventHandler<EventArgs>(GameEvents_GameJoined);
             Zeta.CommonBot.GameEvents.OnGameLeft += new EventHandler<EventArgs>(GameEvents_GameLeft);
-            Zeta.CommonBot.GameEvents.OnPlayerDied += new EventHandler<EventArgs>(GameEvents_PlayerDied); //re-enable when we know build 125 and later are stable.  build 103 is rock solid and doesn't support this event
+            //Zeta.CommonBot.GameEvents.OnPlayerDied += new EventHandler<EventArgs>(GameEvents_PlayerDied); //re-enable when we know build 125 and later are stable.  build 103 is rock solid and doesn't support this event
             running = true;
             if (ZetaDia.IsInGame && !ZetaDia.IsLoadingWorld) 
                 Execute();
@@ -54,7 +54,7 @@ namespace MBot
             Log("Disabled", Name);
             Zeta.CommonBot.GameEvents.OnGameJoined -= GameEvents_GameJoined;
             Zeta.CommonBot.GameEvents.OnGameLeft -= GameEvents_GameLeft;
-            Zeta.CommonBot.GameEvents.OnPlayerDied -= GameEvents_PlayerDied;
+            //Zeta.CommonBot.GameEvents.OnPlayerDied -= GameEvents_PlayerDied;
             running = false;
         }
         public bool Equals(IPlugin other) { return (other.Name == Name) && (other.Version == Version); }
@@ -108,10 +108,11 @@ namespace MBot
                             step++;
                         break;
                     case 2:
-                        if (MoveWithPower(2044, 2529)) //MoveSuperFuckingFast(2026, 2557)
+                        if (MoveWithPower(2044, 2529)) //MoveSuperFuckingFast(2026, 2557) //2044, 2529
                             step++;
                         break;
                     case 3:
+                        ZetaDia.Me.UsePower(SNOPower.DemonHunter_Preparation, ZetaDia.Me.Position);
                         if (!ConditionParser.ActorExistsAt(176007, 2059, 2478, 27, 15))
                         {
                             ZetaDia.Me.UsePower(SNOPower.DemonHunter_SmokeScreen, ZetaDia.Me.Position);
@@ -129,6 +130,8 @@ namespace MBot
                             step++;
                         break;
                     case 6:
+
+                        //ZetaDia.Me.UsePower(SNOPower.DemonHunter_Vault, new Vector3(2066, 2477, ZetaDia.Me.Position.Z), ZetaDia.Me.WorldDynamicId, 2, -1);
                         if (MoveWithPower(2066, 2477))
                             step++;
                         break;
@@ -155,7 +158,7 @@ namespace MBot
                             step++;
                         break;
                     case 12:
-                        if (MoveWithPower(119, 132))
+                        if (MoveTo(120, 137))
                             step++;
                         break;
 					case 13:
@@ -207,7 +210,7 @@ namespace MBot
         {
             while (new Vector3(x, y, ZetaDia.Me.Position.Z).Distance(ZetaDia.Me.Position) > 10 && running && BotMain.IsRunning)
             {
-                if (new Vector3(x, y, ZetaDia.Me.Position.Z).Distance(ZetaDia.Me.Position) > 50 && Zeta.CommonBot.PowerManager.CanCast(SNOPower.DemonHunter_Vault))
+                if (new Vector3(x, y, ZetaDia.Me.Position.Z).Distance(ZetaDia.Me.Position) > 20 && Zeta.CommonBot.PowerManager.CanCast(SNOPower.DemonHunter_Vault))
                 {
                     ZetaDia.Me.UsePower(SNOPower.DemonHunter_Vault, new Vector3(x, y, ZetaDia.Me.Position.Z), ZetaDia.Me.WorldDynamicId, 2, -1);
                     Thread.Sleep(350);
