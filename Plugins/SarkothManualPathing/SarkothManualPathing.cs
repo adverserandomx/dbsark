@@ -85,11 +85,49 @@ namespace MBot
         public int step = 0;
         public bool running = false;
 
+        private void Buff()
+        {
+            switch (ZetaDia.Me.ActorClass)
+            {
+                case ActorClass.WitchDoctor:
+                    ZetaDia.Me.UsePower(SNOPower.Witchdoctor_FetishArmy, ZetaDia.Me.Position);
+                    break;
+
+                case ActorClass.DemonHunter:
+                    ZetaDia.Me.UsePower(SNOPower.DemonHunter_Companion, ZetaDia.Me.Position); //if i don't cast it here, often when i get into cellar, I'm out of discipline.  However, ferrets do agro mobs...
+                    break;
+                default:
+                    throw new NotImplementedException(ZetaDia.Me.ActorClass + " not implemented");
+
+            }
+        }
+
+        private void ExitUnsuccessfulGame()
+        {
+            switch (ZetaDia.Me.ActorClass)
+            {
+                case ActorClass.WitchDoctor:
+                    ZetaDia.Me.UsePower(SNOPower.Witchdoctor_FetishArmy, ZetaDia.Me.Position);
+                    break;
+
+                case ActorClass.DemonHunter:
+                    //surround area to help me port out.
+                    ZetaDia.Me.UsePower(SNOPower.DemonHunter_Sentry, ZetaDia.Me.Position); //make sure you use guardian turrent
+                    ZetaDia.Me.UsePower(SNOPower.DemonHunter_Caltrops, ZetaDia.Me.Position); //hooked spines
+                    break;
+                default:
+                    throw new NotImplementedException(ZetaDia.Me.ActorClass + " not implemented");
+
+            }
+ 
+        }
+
         /// <summary>
         /// TODO: Get rid of case switching and stepping. Makes it harder to reorder functions
         /// </summary>
         public void Execute()
         {
+            
             while (running && BotMain.IsRunning)
             {
                 BotMain.CurrentBot.Pulse();
@@ -98,8 +136,8 @@ namespace MBot
                     case 0:
                         if (ZetaDia.IsInGame && !ZetaDia.IsLoadingWorld && ZetaDia.Me.IsValid)
                         {
-                            ZetaDia.Me.UsePower(SNOPower.DemonHunter_Companion, ZetaDia.Me.Position); //if i don't cast it here, often when i get into cellar, I'm out of discipline.  However, ferrets do agro mobs...
-                            step++;
+                           Buff(); 
+                           step++;
                         }
                         break;
                     case 1:
@@ -108,17 +146,10 @@ namespace MBot
                             step++;
                         break;
                     case 2:
-                        if (MoveWithPower(2044, 2529)) //MoveSuperFuckingFast(2026, 2557) //2044, 2529
+                        if (MoveWithPower(2044, 2529)) //(2026, 2557) //2044, 2529 lets you see the cellar. Sometimes. It's not detecting an open cellar properly
                             step++;
                         break;
                     case 3:
-                        ZetaDia.Me.UsePower(SNOPower.DemonHunter_Preparation, ZetaDia.Me.Position);
-                        if (!ConditionParser.ActorExistsAt(176007, 2059, 2478, 27, 15))
-                        {
-                            ZetaDia.Me.UsePower(SNOPower.DemonHunter_SmokeScreen, ZetaDia.Me.Position);
-                            step = 13;
-                            break;
-                        }
                         step++;
                         break;
                     case 4:
@@ -136,7 +167,13 @@ namespace MBot
                             step++;
                         break;
                     case 7:
-                        ZetaDia.Me.UsePower(SNOPower.DemonHunter_Preparation, ZetaDia.Me.Position);
+                        if (ZetaDia.Me.ActorClass == ActorClass.DemonHunter)
+                            ZetaDia.Me.UsePower(SNOPower.DemonHunter_Preparation, ZetaDia.Me.Position); //reset discipline so I can vault to cellar or exit game
+                        if (!ConditionParser.ActorExistsAt(176007, 2059, 2478, 27, 15))
+                        {
+                            ExitUnsuccessfulGame();
+                            step = 13;
+                        }
                         step++;
                         break;
                     case 8:
@@ -150,7 +187,7 @@ namespace MBot
                         else step++;
                         break;
                     case 10:
-                        ZetaDia.Me.UsePower(SNOPower.DemonHunter_Companion, ZetaDia.Me.Position);
+                        //blank for now
                         step++;
                         break;
                     case 11:
@@ -210,9 +247,12 @@ namespace MBot
         {
             while (new Vector3(x, y, ZetaDia.Me.Position.Z).Distance(ZetaDia.Me.Position) > 10 && running && BotMain.IsRunning)
             {
-                if (new Vector3(x, y, ZetaDia.Me.Position.Z).Distance(ZetaDia.Me.Position) > 20 && Zeta.CommonBot.PowerManager.CanCast(SNOPower.DemonHunter_Vault))
+                if (new Vector3(x, y, ZetaDia.Me.Position.Z).Distance(ZetaDia.Me.Position) > 20 )
                 {
-                    ZetaDia.Me.UsePower(SNOPower.DemonHunter_Vault, new Vector3(x, y, ZetaDia.Me.Position.Z), ZetaDia.Me.WorldDynamicId, 2, -1);
+                    if (ZetaDia.Me.ActorClass == ActorClass.DemonHunter && Zeta.CommonBot.PowerManager.CanCast(SNOPower.DemonHunter_Vault))
+                        ZetaDia.Me.UsePower(SNOPower.DemonHunter_Vault, new Vector3(x, y, ZetaDia.Me.Position.Z), ZetaDia.Me.WorldDynamicId, 2, -1);
+                    else if (ZetaDia.Me.ActorClass == ActorClass.WitchDoctor && Zeta.CommonBot.PowerManager.CanCast(SNOPower.Witchdoctor_SpiritWalk))
+                        ZetaDia.Me.UsePower(SNOPower.Witchdoctor_SpiritWalk, new Vector3(x, y, ZetaDia.Me.Position.Z), ZetaDia.Me.WorldDynamicId, 2, -1);
                     Thread.Sleep(350);
                 }
                 //don't waste discipline smokescreening.  You don't have enough to vault all the way if you do

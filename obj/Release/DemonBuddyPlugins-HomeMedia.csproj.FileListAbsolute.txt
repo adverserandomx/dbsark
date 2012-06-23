@@ -1,1 +1,13 @@
 F:\D3\DemonBuddyPlugins-HomeMedia\obj\Release\ResolveAssemblyReference.cache
+F:\D3\DemonBuddyPlugins-HomeMedia\bin\Release\DemonBuddyPlugins-HomeMedia.dll
+F:\D3\DemonBuddyPlugins-HomeMedia\bin\Release\DemonBuddyPlugins-HomeMedia.pdb
+F:\D3\DemonBuddyPlugins-HomeMedia\bin\Release\Demonbuddy.125.exe
+F:\D3\DemonBuddyPlugins-HomeMedia\bin\Release\IronPython.dll
+F:\D3\DemonBuddyPlugins-HomeMedia\bin\Release\System.Data.SQLite.dll
+F:\D3\DemonBuddyPlugins-HomeMedia\bin\Release\RemoteASMNative.dll
+F:\D3\DemonBuddyPlugins-HomeMedia\bin\Release\fasmdll_managed.dll
+F:\D3\DemonBuddyPlugins-HomeMedia\bin\Release\Microsoft.Scripting.dll
+F:\D3\DemonBuddyPlugins-HomeMedia\bin\Release\Microsoft.Dynamic.dll
+F:\D3\DemonBuddyPlugins-HomeMedia\bin\Release\Microsoft.Scripting.Metadata.dll
+F:\D3\DemonBuddyPlugins-HomeMedia\obj\Release\DemonBuddyPlugins-HomeMedia.dll
+F:\D3\DemonBuddyPlugins-HomeMedia\obj\Release\DemonBuddyPlugins-HomeMedia.pdb

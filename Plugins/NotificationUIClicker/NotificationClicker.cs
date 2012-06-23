@@ -22,7 +22,7 @@ namespace MBot
 
         public string Name { get { return "Notifcation UI Clicker"; } }
 
-        public System.Version Version { get { return new Version(1, 0); } }
+        public System.Version Version { get { return new Version(1, 1); } }
 
         public bool Equals(IPlugin other)
         {
@@ -66,24 +66,58 @@ namespace MBot
         {
             try
             {
-                Zeta.Internals.UIElement ui = Zeta.Internals.UIElement.FromHash(0x4CC93A73A58BAFFF);
-                if (ui != null && ui.IsValid)
+
+                Zeta.Internals.UIElement ui = null;
+
+                if (Zeta.Internals.UIElement.IsValidElement(0x4CC93A73A58BAFFF) && (ui = Zeta.Internals.UIElement.FromHash(0x4CC93A73A58BAFFF)) != null)
                 {
                     if (ui.IsVisible)
                     {
-                        Log(String.Format("Detected UI = {0}, Visible = {1}", ui.Name, ui.IsVisible));
+                        Log(String.Format("Detect UI = {0}, Visible = {1}", ui.Name, ui.IsVisible));
 
-                        Zeta.Internals.UIElement Button = Zeta.Internals.UIElement.FromHash(0xB4433DA3F648A992);
-                        if (Button != null && Button.IsValid)
+                        Zeta.Internals.UIElement Button = null;
+
+                        if (Zeta.Internals.UIElement.IsValidElement(0xB4433DA3F648A992) && (Button = Zeta.Internals.UIElement.FromHash(0xB4433DA3F648A992)) != null)
                         {
                             if (Button.IsVisible)
                             {
-                                Log("Notification clicked");
+                                Log("Notification OK clicked");
                                 Button.Click();
-                            }                                
+
+                                // Case for click OK when Disconnect popups in Start/Resume menu
+                                if (Zeta.Internals.UIElement.IsValidElement(0x51A3923949DC80B7) && (Button = Zeta.Internals.UIElement.FromHash(0x51A3923949DC80B7)) != null)
+                                {
+                                    if (Button.IsVisible && Button.IsEnabled)
+                                    {
+                                        Log("Resume/Start Button clicked");
+                                        Button.Click();
+                                    }
+                                }
+
+                            }
                         }
                     }
                 }
+                else if (Zeta.Internals.UIElement.IsValidElement(0x7355E17C5FE4B253) && (ui = Zeta.Internals.UIElement.FromHash(0x7355E17C5FE4B253)) != null)
+                {
+                    // Party notification
+                    if (ui.IsVisible)
+                    {
+                        Log(String.Format("Detect UI = {0}, Visible = {1}", ui.Name, ui.IsVisible));
+                        Zeta.Internals.UIElement Button = null;
+
+                        if (Zeta.Internals.UIElement.IsValidElement(0xB4433DA3F648A992) && (Button = Zeta.Internals.UIElement.FromHash(0xB4433DA3F648A992)) != null)
+                        {
+                            if (Button.IsVisible)
+                            {
+                                Log("Party Notification click");
+                                Button.Click();
+                            }
+                        }
+                    }
+                }
+
+
             }
             catch (Exception)
             {

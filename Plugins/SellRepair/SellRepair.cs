@@ -101,12 +101,6 @@ namespace MBot.SellRepair
                 ProfileManager.CurrentProfileBehavior.ResetCachedDone();
 
                 ZetaDia.Me.UseTownPortal();
-
-                IEnumerable<DiaObject> objQuery =
-                    from unit in ZetaDia.Actors.GetActorsOfType<DiaObject>(true, false)
-                    where unit.ActorType == Zeta.Internals.SNO.ActorType.Gizmo
-                    select unit;
-
             
                 Zeta.CommonBot.ItemManager.StashItems();
                 //stash
